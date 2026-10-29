@@ -1,0 +1,10 @@
+include README.md THIRD_PARTY_NOTICES.md requirements-tested.txt
+recursive-include licenses *.txt
+recursive-include configs *.json
+recursive-include docs *.md *.json
+recursive-include tests *.py
+prune validation_artifacts
+prune data
+prune checkpoints
+prune runs
+prune outputs

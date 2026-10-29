@@ -1,0 +1,19 @@
+{
+  "recorded_source_commit": "dc274b3281026fef3a1cb395df70d552df784dfd",
+  "source_snapshot_sha256": {
+    "config.py": "0b9a07a8150cb71684cedaaa02845d643cdd1bdfcc349702a50077ae95fe16bd",
+    "utils/attr_dict.py": "42c5f3e9e85de66537aff98f8954f7eaee46b213f608696e464d022f323833a1",
+    "network/hrnetv2.py": "e8735c4bef143efc2973bc637850af9b6adaf4ef313048c508333ce8e4719e3a",
+    "network/mynn.py": "fae860ee0d2d10e88cbe9732ada37ea382f2ea37b06c6dc08bbc624b652a4073",
+    "network/utils.py": "2f73e1bd17b0a771fecf1fee9509509d58fee39b4636335665874aab4be4e62d",
+    "network/ocrnet.py": "9cea2b1d01723b6967febbd75fc044c57f9132c66791c6e77dbd907708a75193",
+    "network/ocr_utils.py": "64a0a6305db5e2ea5d60656292340452f1725f2537696793128794d3fdc15f73"
+  },
+  "adaptations": [
+    "Package-relative imports; no global module injection",
+    "Keep only HRNet backbone construction",
+    "Native PyTorch AMP interpolation compatibility",
+    "Existing np.int to int compatibility fix retained"
+  ],
+  "note": "Recorded commit from the original local snapshot; not an independently verified upstream revision."
+}

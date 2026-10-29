@@ -1,0 +1,35 @@
+{
+  "steps": 1000,
+  "accumulation": 4,
+  "warmup": 100,
+  "base_lr": [
+    1e-05,
+    5e-05,
+    0.0005
+  ],
+  "loss_weights": [
+    1,
+    1,
+    4,
+    4,
+    2,
+    2,
+    1,
+    1
+  ],
+  "crop": [
+    512,
+    768
+  ],
+  "seed": 20261028,
+  "sample_offset": 6000,
+  "validate_every": 250,
+  "save_every": 250,
+  "workers": 2,
+  "precision": "bf16",
+  "validation_precision": "bf16",
+  "momentum": 0.9,
+  "weight_decay": 0.0001,
+  "aux_weight": 0.4,
+  "clip_grad": 10.0
+}

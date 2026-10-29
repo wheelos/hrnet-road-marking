@@ -1,0 +1,8 @@
+# Reference environment used for the selected checkpoint and extraction tests.
+# Install the matching CUDA build of torch/torchvision for the local GPU first.
+torch==2.1.0
+torchvision==0.16.0
+numpy==1.26.4
+Pillow==12.3.0
+onnx==1.16.2
+onnxruntime==1.18.1
