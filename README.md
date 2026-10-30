@@ -5,7 +5,8 @@ Mapillary Vistas v2 上的 **8 类 HRNet-W48 + OCR** 语义分割训练工具。
 评估、原生分辨率推理和 ONNX 导出。运行不依赖 Apollo、Cyber、TensorRT 或原工程目录。
 
 本仓库管理模型前端，不包含 LiDAR 投影、几何融合、车道拓扑或地图导出。
-权重、数据集、实车图像和运行产物不入 Git。
+最佳8类权重、124类训练父权重和原始65类HRNet权重通过Git LFS管理。
+数据集、实车图像、其他训练产物和TensorRT engine不入Git。
 
 ## 类别与边界
 
@@ -25,6 +26,23 @@ Mapillary Vistas v2 上的 **8 类 HRNet-W48 + OCR** 语义分割训练工具。
 没有独立减速带类别；黄色禁停网格可能落入 `other_marking`，不能认为所有禁停区
 都已归入 `exclude_marking`。原始 `evaluate=false` 标签及补边区域训练时忽略。
 标签 PNG 必须读取 palette 索引，不能通过 RGB 颜色反查类别。
+
+## 获取模型
+
+先安装 [Git LFS](https://git-lfs.com/)，再获取模型文件：
+
+```bash
+git lfs install
+git clone git@github.com:wheelos/hrnet-road-marking.git
+cd hrnet-road-marking
+git lfs pull
+sha256sum -c models/SHA256SUMS
+```
+
+已有clone只需在仓库内运行`git lfs install --local`和`git lfs pull`。
+`models/`包含所选8类step1500、124类step10000父权重、原始65类预训练模型及
+原始类别表。文件用途、大小、SHA256和加载示例见[模型说明](models/README.md)。
+Git提交中的大文件是LFS指针；实际模型由Git LFS存储，不随Python wheel/sdist分发。
 
 ## 安装
 
@@ -80,14 +98,14 @@ hrnet-prepare --data /path/to/vistas --instances /path/to/vistas.zip --output da
 hrnet-train --config configs/train8.json \
   --data /path/to/vistas --arrow-index data/index/arrow_instances.json \
   --validation-ids configs/validation_570.json \
-  --initial-checkpoint /path/to/coarse8.pth --output runs/new_training
+  --initial-checkpoint models/hrnet_coarse8_best_step1500.pth --output runs/new_training
 ```
 
 以上是**新训练**，会新建优化器。`train8.json` 保存原 4,000 步训练配置，
 不能把从 8 类 best 再训练一轮称为原始训练的精确复现，也不保证效果提高。
 
 复现原 124→8 初始化路线，把 `--initial-checkpoint` 改为
-`--initial-124 /path/to/vistas124.pth`。该文件必须是原架构的已训练 124 类 checkpoint，
+`--initial-124 models/hrnet_vistas124_best_step10000.pth`。该文件必须是原架构的已训练 124 类 checkpoint，
 不是任意 ImageNet 权重。分类头使用原实验的均值初始化，非分类头严格复制；
 初始化不等价于原 124 类概率相加，需要后续训练。已选基线的父权重信息见
 `docs/baseline.md`。本仓库不包含原先的 65→124 训练过程。
@@ -118,9 +136,9 @@ CUDA/BF16反向计算存在非确定性，不承诺续训与连续训练的参�
 ## 评估
 
 ```bash
-hrnet-evaluate --data /path/to/vistas --checkpoint /path/to/coarse8.pth \
+hrnet-evaluate --data /path/to/vistas --checkpoint models/hrnet_coarse8_best_step1500.pth \
   --validation-ids configs/validation_570.json --output outputs/eval_panel
-hrnet-evaluate --data /path/to/vistas --checkpoint /path/to/coarse8.pth \
+hrnet-evaluate --data /path/to/vistas --checkpoint models/hrnet_coarse8_best_step1500.pth \
   --output outputs/eval_full
 ```
 
@@ -133,7 +151,7 @@ lane误过滤和路面误判标记比例。它们是像素指标，不是实际�
 ## 图片推理
 
 ```bash
-hrnet-predict --checkpoint /path/to/coarse8.pth \
+hrnet-predict --checkpoint models/hrnet_coarse8_best_step1500.pth \
   --input /path/to/images --output outputs/predictions
 ```
 
@@ -145,7 +163,7 @@ hrnet-predict --checkpoint /path/to/coarse8.pth \
 ## ONNX 导出
 
 ```bash
-hrnet-export --checkpoint /path/to/coarse8.pth --output outputs/hrnet.onnx
+hrnet-export --checkpoint models/hrnet_coarse8_best_step1500.pth --output outputs/hrnet.onnx
 ```
 
 opset17；输入 `image` 为已归一化 RGB FP32 `[1,3,H,W]`，输出 `logits` 为
@@ -158,7 +176,7 @@ FP32 `[1,8,H,W]`。H/W动态，batch固定1。归一化、类别softmax、argmax
 
 所选8类权重为4,000步训练中的step1500：
 `fbcbc1312837b8e8e31c3d4c9521aab3c5bb44be8c28360a142db29f2c313ffc`。
-权重需要另外提供；仓库不会隐式从旧工程找文件或联网下载权重。
+所选权重已在`models/`通过Git LFS管理；运行命令显式指定文件，不依赖旧工程目录。
 A/B精调未获得兼顾过滤召回的整体改进，参数为实验记录，不是推荐替代基线。
 详见 `docs/baseline.md` 和 `docs/validation.md`。
 

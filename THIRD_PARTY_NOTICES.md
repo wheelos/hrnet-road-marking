@@ -32,8 +32,11 @@ is included; this package uses PyTorch BatchNorm2d.
 
 ## Data and weights
 
-Mapillary Vistas images, annotations and third-party pretrained weights are not
-included. Their own distribution/use conditions apply separately from the code.
+Mapillary Vistas images and annotations are not included. Selected model weights,
+including the original65-class pretrained checkpoint and original taxonomy, are
+retained in `models/` via Git LFS with byte-for-byte source hashes. Their own
+terms apply separately from the project code license; this addition does not
+relicense the upstream weights or the dataset. See `models/README.md`.
 Private vehicle images, calibration, records and account credentials must not be
 added to this repository. Class IDs and evaluation split IDs document the task;
 they do not include dataset pixels.

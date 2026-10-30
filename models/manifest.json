@@ -1,0 +1,38 @@
+{
+  "architecture": "HRNet-W48 + OCR",
+  "storage": "git-lfs for .pth",
+  "files": [
+    {
+      "file": "hrnet_coarse8_best_step1500.pth",
+      "sha256": "fbcbc1312837b8e8e31c3d4c9521aab3c5bb44be8c28360a142db29f2c313ffc",
+      "bytes": 289479234,
+      "output_classes": 8,
+      "step": 1500,
+      "role": "selected_baseline"
+    },
+    {
+      "file": "hrnet_vistas124_best_step10000.pth",
+      "sha256": "410ddff9467ad41401e26f23e9273a8333f154f80a4211b006d535cb608223fd",
+      "bytes": 290064770,
+      "output_classes": 124,
+      "step": 10000,
+      "role": "eight_class_training_parent"
+    },
+    {
+      "file": "hrnet_mapillary65_pretrained.pth",
+      "sha256": "9f693372bd3234d956e047e93925d8c92af80ede11e51243b59aeae7d5b8c9da",
+      "bytes": 578567512,
+      "output_classes": 65,
+      "step": null,
+      "role": "original_pretrained_model"
+    },
+    {
+      "file": "mapillary65_labels.json",
+      "sha256": "3ea5474fb2273bf8e919e8b2ca0ba797b8d9578832647b6afd3b2633234de170",
+      "bytes": 14947,
+      "output_classes": null,
+      "step": null,
+      "role": "original_pretrained_taxonomy"
+    }
+  ]
+}

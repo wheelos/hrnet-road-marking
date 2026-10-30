@@ -1,0 +1,4 @@
+models/*.pth filter=lfs diff=lfs merge=lfs -text
+
+# Preserve the upstream taxonomy bytes, including its existing whitespace.
+models/mapillary65_labels.json -text -whitespace

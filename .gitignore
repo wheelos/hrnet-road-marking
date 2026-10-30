@@ -25,3 +25,8 @@ validation_artifacts/
 *.npy
 *.npz
 *.log
+
+# Selected checkpoints are versioned with Git LFS; other generated weights stay ignored.
+!models/hrnet_coarse8_best_step1500.pth
+!models/hrnet_vistas124_best_step10000.pth
+!models/hrnet_mapillary65_pretrained.pth

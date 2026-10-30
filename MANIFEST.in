@@ -8,3 +8,4 @@ prune data
 prune checkpoints
 prune runs
 prune outputs
+prune models

@@ -8,9 +8,16 @@ Checkpoint SHA256:
 
 The initial checkpoint for this run was a trained 124-class HRNet-OCR (step10000):
 `410ddff9467ad41401e26f23e9273a8333f154f80a4211b006d535cb608223fd`.
-It is required to repeat the 124→8 initialization route; neither checkpoint is
-included or automatically downloaded. Strictly load the selected eight-class
-checkpoint for deployment; never repeat head initialization on that checkpoint.
+It is required to repeat the 124→8 initialization route. Both checkpoints are
+versioned with Git LFS in `models/`:
+- `hrnet_coarse8_best_step1500.pth`: selected deployment/fine-tuning baseline.
+- `hrnet_vistas124_best_step10000.pth`: input to `--initial-124`.
+
+The original65-class pretrained checkpoint is also retained as
+`hrnet_mapillary65_pretrained.pth`, with its original taxonomy JSON.
+Run `git lfs pull` and verify `models/SHA256SUMS` before use. Strictly load the
+selected eight-class checkpoint for deployment; never repeat head initialization
+on that checkpoint. See `models/README.md` for the three distinct loading paths.
 
 ## Recorded evaluation, percentages
 
